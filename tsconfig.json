@@ -5,8 +5,11 @@
     "rootDir": "src", // Source directory for TypeScript files
     "outDir": "dist", // Output directory for JavaScript files
     "strict": true, // Enable strict type checking
+    "strictPropertyInitialization": false, // Disable strict property initialization
     "esModuleInterop": true, // Allow default imports from CommonJS modules
-    "skipLibCheck": true // Skip type checking of declaration files
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]

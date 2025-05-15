@@ -1,13 +1,12 @@
 import fastify from "fastify";
-import { userController, welcomeController } from "./controllers";
 import { errorHandler } from "./handlers";
-import { config } from "dotenv";
 import fastifyEnv from "@fastify/env";
 import { EnvironmentSchema } from "./schemas";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
+import { userController } from "./modules/users/users.controller";
+import { welcomeController } from "./modules/welcome/welcome.controller";
 
-config();
 const app = fastify();
 
 app.register(fastifyEnv, {
