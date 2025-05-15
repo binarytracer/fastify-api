@@ -5,7 +5,7 @@ import app from "./app";
 
 // Initialize the database connection
 AppDataSource.initialize()
-  .then(() => {
+  .then((instance) => {
     console.log("Data Source has been initialized!");
     const port = Number(process.env.PORT || 4000);
     app.listen({ port }, () => {
