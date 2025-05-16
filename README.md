@@ -9,7 +9,8 @@
 - [x] **Typebox**, validation, swagger schemas
 - [x] **Typeorm**, ORM
 - [x] **PG**, postgredb library
-- [ ] **Fastify Typeorm**, using typeorm inside fastify instance
+- [x] **Fastify Typeorm**, using typeorm inside fastify instance
+- [ ] Unit and Integration Tests
 
 ### Local setup
 
