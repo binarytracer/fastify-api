@@ -1,13 +1,28 @@
 import { FastifyRequest, FastifyReply, FastifyInstance } from "fastify";
-import { CreateUserSchema, GetUsersResponseSchema } from "../../schemas";
+import { GetOneSchema, GetOneSchemaType } from "../../schemas";
 import { UserService } from "./users.service";
+import {
+  CreateResponseSchema,
+  CreateUserSchema,
+  CreateUserSchemaType,
+  GetUsersResponseSchema,
+  UserSchema,
+} from "./schemas";
 
 const userService = new UserService();
 export function userController(app: FastifyInstance) {
+  const tags = ["Users"];
+
   app.get(
     "/users",
     {
-      schema: GetUsersResponseSchema,
+      schema: {
+        tags,
+        description: "Get all users",
+        response: {
+          200: GetUsersResponseSchema,
+        },
+      },
     },
     async (request: FastifyRequest, reply: FastifyReply) => {
       const users = await userService.findAll();
@@ -19,18 +34,16 @@ export function userController(app: FastifyInstance) {
     "/users/:id",
     {
       schema: {
+        tags,
         description: "Get a user by ID",
-        tags: ["Users"],
-        params: {
-          type: "object",
-          properties: {
-            id: { type: "number" },
-          },
+        params: GetOneSchema,
+        response: {
+          200: UserSchema,
         },
       },
     },
     async (
-      request: FastifyRequest<{ Params: { id: number } }>,
+      request: FastifyRequest<{ Params: GetOneSchemaType }>,
       reply: FastifyReply
     ) => {
       const user = await userService.findById(request.params.id);
@@ -45,16 +58,16 @@ export function userController(app: FastifyInstance) {
     "/users",
     {
       schema: {
-        body: CreateUserSchema,
+        tags,
         description: "Create a new user",
-        tags: ["Users"],
+        body: CreateUserSchema,
         response: {
-          201: CreateUserSchema,
+          201: CreateResponseSchema,
         },
       },
     },
     async (
-      request: FastifyRequest<{ Body: Partial<any> }>,
+      request: FastifyRequest<{ Body: CreateUserSchemaType }>,
       reply: FastifyReply
     ) => {
       const user = await userService.create(request.body);

@@ -1,5 +1,6 @@
 import { AppDataSource } from "../../config/database";
 import { User } from "./entities/user.entity";
+import { UserSchemaType } from "./schemas";
 
 export class UserService {
   private userRepository = AppDataSource.getRepository(User);
@@ -8,7 +9,7 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async findById(id: number): Promise<User | null> {
+  async findById(id: UserSchemaType["id"]): Promise<User | null> {
     return this.userRepository.findOneBy({ id });
   }
 
