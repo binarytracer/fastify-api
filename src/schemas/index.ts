@@ -9,7 +9,7 @@ export const GetOneSchema = Type.Object({
 });
 export type GetOneSchemaType = Static<typeof GetOneSchema>;
 
-export const DateSchema = Type.String({ format: "date" });
+export const DateSchema = Type.String({ format: "date-time" });
 export const DateTimeSchema = Type.String({ format: "date-time" });
 
 export const PaginationSchema = Type.Object({

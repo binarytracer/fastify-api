@@ -1,5 +1,6 @@
-import { Static, Type } from "@sinclair/typebox";
+import {  Type } from "@sinclair/typebox";
 import { DateTimeSchema } from "../../../schemas";
+import { UserModelSchema } from "./model";
 
 export const CreateResponseSchema = Type.Object({
   id: Type.Number(),
@@ -9,14 +10,5 @@ export const CreateResponseSchema = Type.Object({
   updatedAt: DateTimeSchema,
 });
 
-export const UserSchema = Type.Object({
-  id: Type.Number(),
-  name: Type.String(),
-  email: Type.String(),
-  createdAt: DateTimeSchema,
-  updatedAt: DateTimeSchema,
-});
-
-export type UserSchemaType = Static<typeof UserSchema>;
-
-export const GetUsersResponseSchema = Type.Array(UserSchema);
+export const GetUsersResponseSchema = Type.Array(UserModelSchema);
+export const GetUserResponseSchema = UserModelSchema;

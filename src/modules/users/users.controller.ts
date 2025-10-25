@@ -5,8 +5,8 @@ import {
   CreateResponseSchema,
   CreateUserSchema,
   CreateUserSchemaType,
+  GetUserResponseSchema,
   GetUsersResponseSchema,
-  UserSchema,
 } from "./schemas";
 
 const userService = new UserService();
@@ -14,7 +14,7 @@ export function userController(app: FastifyInstance) {
   const tags = ["Users"];
 
   app.get(
-    "/users",
+    "",
     {
       schema: {
         tags,
@@ -31,14 +31,14 @@ export function userController(app: FastifyInstance) {
   );
 
   app.get(
-    "/users/:id",
+    "/:id",
     {
       schema: {
         tags,
         description: "Get a user by ID",
         params: GetOneSchema,
         response: {
-          200: UserSchema,
+          200: GetUserResponseSchema,
         },
       },
     },
@@ -55,7 +55,7 @@ export function userController(app: FastifyInstance) {
   );
 
   app.post(
-    "/users",
+    "",
     {
       schema: {
         tags,
@@ -76,7 +76,7 @@ export function userController(app: FastifyInstance) {
   );
 
   app.put(
-    "/users/:id",
+    "/:id",
     {
       schema: {
         description: "Update a user",
@@ -103,7 +103,7 @@ export function userController(app: FastifyInstance) {
   );
 
   app.delete(
-    "/users/:id",
+    "/:id",
     {
       schema: {
         description: "Delete a user",

@@ -12,22 +12,22 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "@sinclair/typebox": "^0.34.33",
-    "@types/node": "^22.15.18",
+    "@sinclair/typebox": "0.34.41",
+    "@types/node": "24.9.1",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.8.3"
+    "typescript": "5.9.3"
   },
   "dependencies": {
-    "@fastify/env": "^5.0.2",
-    "@fastify/swagger": "^9.5.1",
-    "@fastify/swagger-ui": "^5.2.2",
-    "dotenv": "^16.5.0",
-    "fastify": "5.4.0",
-    "pg": "^8.16.0",
+    "@fastify/env": "5.0.3",
+    "@fastify/swagger": "9.5.2",
+    "@fastify/swagger-ui": "5.2.3",
+    "dotenv": "17.2.3",
+    "fastify": "5.6.1",
+    "pg": "8.16.3",
     "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.24"
+    "typeorm": "0.3.27"
   },
   "nodemonConfig": {
     "ext": "ts",
