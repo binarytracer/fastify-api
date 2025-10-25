@@ -6,9 +6,18 @@ import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import { userController } from "./modules/users/users.controller";
 import { welcomeController } from "./modules/welcome/welcome.controller";
+import fastifyNoAdditionalProperties from "fastify-no-additional-properties";
+import { authController } from "./modules/auth/auth.controller";
 
-const app = fastify();
+const app = fastify({
+  ajv: {
+    customOptions: {
+      allErrors: true,
+    },
+  },
+});
 
+app.register(fastifyNoAdditionalProperties);
 app.register(fastifyEnv, {
   dotenv: true,
   schema: EnvironmentSchema,
@@ -36,6 +45,7 @@ app.register(fastifySwaggerUi, {
 // routes
 app.register(userController,{prefix: "/users"});
 app.register(welcomeController,{prefix: "/"});
+app.register(authController,{prefix: "/auth"});
 app.setErrorHandler(errorHandler);
 
 export default app;

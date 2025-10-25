@@ -4,9 +4,12 @@ import { UserService } from "./users.service";
 import {
   CreateResponseSchema,
   CreateUserSchema,
-  CreateUserSchemaType,
+  CreateUser,
+  GetIdSchema,
+  GetId,
   GetUserResponseSchema,
   GetUsersResponseSchema,
+  UpdateUser,
 } from "./schemas";
 
 const userService = new UserService();
@@ -67,9 +70,11 @@ export function userController(app: FastifyInstance) {
       },
     },
     async (
-      request: FastifyRequest<{ Body: CreateUserSchemaType }>,
+      request: FastifyRequest<{ Body: CreateUser }>,
       reply: FastifyReply
     ) => {
+
+      console.log(request.body);
       const user = await userService.create(request.body);
       return reply.status(201).send(user);
     }
@@ -81,17 +86,15 @@ export function userController(app: FastifyInstance) {
       schema: {
         description: "Update a user",
         tags: ["Users"],
-        params: {
-          type: "object",
-          properties: {
-            id: { type: "number" },
-          },
-        },
+        params: GetIdSchema,
         body: CreateUserSchema,
+        response: {
+          200: GetUserResponseSchema,
+        },
       },
     },
     async (
-      request: FastifyRequest<{ Params: { id: number }; Body: Partial<any> }>,
+      request: FastifyRequest<{ Params: GetId; Body: UpdateUser }>,
       reply: FastifyReply
     ) => {
       const user = await userService.update(request.params.id, request.body);
@@ -108,16 +111,11 @@ export function userController(app: FastifyInstance) {
       schema: {
         description: "Delete a user",
         tags: ["Users"],
-        params: {
-          type: "object",
-          properties: {
-            id: { type: "number" },
-          },
-        },
+        params: GetIdSchema,
       },
     },
     async (
-      request: FastifyRequest<{ Params: { id: number } }>,
+      request: FastifyRequest<{ Params: GetId }>,
       reply: FastifyReply
     ) => {
       await userService.delete(request.params.id);

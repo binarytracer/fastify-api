@@ -6,4 +6,13 @@ export const CreateUserSchema = Type.Object({
   password: Type.String(),
 });
 
-export type CreateUserSchemaType = Static<typeof CreateUserSchema>;
+export type CreateUser = Static<typeof CreateUserSchema>;
+
+export const GetIdSchema = Type.Object({
+  id: Type.Number(),
+});
+
+export type GetId = Static<typeof GetIdSchema>;
+
+export const UpdateUserSchema = Type.Partial(CreateUserSchema);
+export type UpdateUser = Static<typeof UpdateUserSchema>;
