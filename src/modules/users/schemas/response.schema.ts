@@ -1,4 +1,4 @@
-import {  Type } from "@sinclair/typebox";
+import { Type } from "@sinclair/typebox";
 import { DateTimeSchema } from "../../../schemas";
 import { UserModelSchema } from "./model";
 

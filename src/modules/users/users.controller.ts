@@ -11,11 +11,13 @@ import {
   GetUsersResponseSchema,
   UpdateUser,
 } from "./schemas";
+import { authenticate } from "../../hooks/authenticate";
 
 const userService = new UserService();
 export function userController(app: FastifyInstance) {
   const tags = ["Users"];
 
+  app.addHook("preHandler", authenticate);
   app.get(
     "",
     {
@@ -45,10 +47,7 @@ export function userController(app: FastifyInstance) {
         },
       },
     },
-    async (
-      request: FastifyRequest<{ Params: GetOneSchemaType }>,
-      reply: FastifyReply
-    ) => {
+    async (request: FastifyRequest<{ Params: GetOneSchemaType }>, reply: FastifyReply) => {
       const user = await userService.findById(request.params.id);
       if (!user) {
         return reply.status(404).send({ error: "User not found" });
@@ -69,12 +68,7 @@ export function userController(app: FastifyInstance) {
         },
       },
     },
-    async (
-      request: FastifyRequest<{ Body: CreateUser }>,
-      reply: FastifyReply
-    ) => {
-
-      console.log(request.body);
+    async (request: FastifyRequest<{ Body: CreateUser }>, reply: FastifyReply) => {
       const user = await userService.create(request.body);
       return reply.status(201).send(user);
     }
@@ -93,10 +87,7 @@ export function userController(app: FastifyInstance) {
         },
       },
     },
-    async (
-      request: FastifyRequest<{ Params: GetId; Body: UpdateUser }>,
-      reply: FastifyReply
-    ) => {
+    async (request: FastifyRequest<{ Params: GetId; Body: UpdateUser }>, reply: FastifyReply) => {
       const user = await userService.update(request.params.id, request.body);
       if (!user) {
         return reply.status(404).send({ error: "User not found" });
@@ -114,10 +105,7 @@ export function userController(app: FastifyInstance) {
         params: GetIdSchema,
       },
     },
-    async (
-      request: FastifyRequest<{ Params: GetId }>,
-      reply: FastifyReply
-    ) => {
+    async (request: FastifyRequest<{ Params: GetId }>, reply: FastifyReply) => {
       await userService.delete(request.params.id);
       return reply.status(204).send();
     }

@@ -43,9 +43,9 @@ app.register(fastifySwaggerUi, {
 });
 
 // routes
-app.register(userController,{prefix: "/users"});
-app.register(welcomeController,{prefix: "/"});
-app.register(authController,{prefix: "/auth"});
+app.register(userController, { prefix: "/users" });
+app.register(welcomeController, { prefix: "/" });
+app.register(authController, { prefix: "/auth" });
 app.setErrorHandler(errorHandler);
 
 export default app;
