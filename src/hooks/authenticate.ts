@@ -9,9 +9,7 @@ interface AuthenticatedRequest extends FastifyRequest {
   };
 }
 
-export async function authenticate(
-  request: AuthenticatedRequest
-): Promise<void> {
+export async function authenticate(request: AuthenticatedRequest): Promise<void> {
   // Extract token from Authorization header
   const authHeader = request.headers.authorization;
 
