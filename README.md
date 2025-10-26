@@ -6,10 +6,11 @@
 
 - [x] **Dotenv**, environment variables.
 - [x] **Swagger**, api docs
-- [ ] **Typebox**, validation
-- [ ] **Typeorm**, ORM
-- [ ] **PG**, postgredb library
-- [ ] **Nodemon**
+- [x] **Typebox**, validation
+- [x] **Typeorm**, ORM
+- [x] **PG**, postgredb library
+- [x] **Nodemon**
+- [x] **Authentication**
 - [ ] **Fastify Typeorm**, using typeorm inside fastify instance
 
 ### Local setup
