@@ -1,6 +1,7 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { BaseError } from "./base.error";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function errorHandler(error: any, request: FastifyRequest, reply: FastifyReply) {
   // Handle Fastify validation errors
   if (error.validation) {

@@ -24,7 +24,7 @@ export class JWTService {
   verifyToken(token: string): JwtTokenPayload | null {
     try {
       return jwt.verify(token, this.secret) as JwtTokenPayload;
-    } catch (error) {
+    } catch (_error) {
       return null;
     }
   }

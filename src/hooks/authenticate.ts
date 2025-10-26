@@ -1,4 +1,4 @@
-import { FastifyRequest, FastifyReply } from "fastify";
+import { FastifyRequest } from "fastify";
 import { JWTService } from "../modules/auth/jwt.service";
 import { UnauthorizedError } from "../handlers";
 
@@ -10,8 +10,7 @@ interface AuthenticatedRequest extends FastifyRequest {
 }
 
 export async function authenticate(
-  request: AuthenticatedRequest,
-  reply: FastifyReply
+  request: AuthenticatedRequest
 ): Promise<void> {
   // Extract token from Authorization header
   const authHeader = request.headers.authorization;

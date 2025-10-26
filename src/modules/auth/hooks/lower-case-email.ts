@@ -1,6 +1,6 @@
-import { FastifyRequest, FastifyReply } from "fastify";
+import { FastifyRequest } from "fastify";
 
-export async function lowerCaseEmail(request: FastifyRequest, reply: FastifyReply): Promise<void> {
+export async function lowerCaseEmail(request: FastifyRequest): Promise<void> {
   const body = request.body as { email?: string };
 
   if (body.email) {
