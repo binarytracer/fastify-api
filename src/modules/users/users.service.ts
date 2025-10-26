@@ -8,7 +8,7 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async findById(id: number): Promise<User | null> {
+  async findById(id: User["id"]): Promise<User | null> {
     return this.userRepository.findOneBy({ id });
   }
 

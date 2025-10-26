@@ -1,13 +1,33 @@
 import { FastifyRequest, FastifyReply, FastifyInstance } from "fastify";
-import { CreateUserSchema, GetUsersResponseSchema } from "../../schemas";
+import { GetOneSchema, GetOneSchemaType } from "../../schemas";
 import { UserService } from "./users.service";
+import {
+  CreateResponseSchema,
+  CreateUserSchema,
+  CreateUser,
+  GetIdSchema,
+  GetId,
+  GetUserResponseSchema,
+  GetUsersResponseSchema,
+  UpdateUser,
+} from "./schemas";
+import { authenticate } from "../../hooks/authenticate";
 
 const userService = new UserService();
 export function userController(app: FastifyInstance) {
+  const tags = ["Users"];
+
+  app.addHook("preHandler", authenticate);
   app.get(
-    "/users",
+    "",
     {
-      schema: GetUsersResponseSchema,
+      schema: {
+        tags,
+        description: "Get all users",
+        response: {
+          200: GetUsersResponseSchema,
+        },
+      },
     },
     async (request: FastifyRequest, reply: FastifyReply) => {
       const users = await userService.findAll();
@@ -16,23 +36,18 @@ export function userController(app: FastifyInstance) {
   );
 
   app.get(
-    "/users/:id",
+    "/:id",
     {
       schema: {
+        tags,
         description: "Get a user by ID",
-        tags: ["Users"],
-        params: {
-          type: "object",
-          properties: {
-            id: { type: "number" },
-          },
+        params: GetOneSchema,
+        response: {
+          200: GetUserResponseSchema,
         },
       },
     },
-    async (
-      request: FastifyRequest<{ Params: { id: number } }>,
-      reply: FastifyReply
-    ) => {
+    async (request: FastifyRequest<{ Params: GetOneSchemaType }>, reply: FastifyReply) => {
       const user = await userService.findById(request.params.id);
       if (!user) {
         return reply.status(404).send({ error: "User not found" });
@@ -42,45 +57,37 @@ export function userController(app: FastifyInstance) {
   );
 
   app.post(
-    "/users",
+    "",
     {
       schema: {
-        body: CreateUserSchema,
+        tags,
         description: "Create a new user",
-        tags: ["Users"],
+        body: CreateUserSchema,
         response: {
-          201: CreateUserSchema,
+          201: CreateResponseSchema,
         },
       },
     },
-    async (
-      request: FastifyRequest<{ Body: Partial<any> }>,
-      reply: FastifyReply
-    ) => {
+    async (request: FastifyRequest<{ Body: CreateUser }>, reply: FastifyReply) => {
       const user = await userService.create(request.body);
       return reply.status(201).send(user);
     }
   );
 
   app.put(
-    "/users/:id",
+    "/:id",
     {
       schema: {
         description: "Update a user",
         tags: ["Users"],
-        params: {
-          type: "object",
-          properties: {
-            id: { type: "number" },
-          },
-        },
+        params: GetIdSchema,
         body: CreateUserSchema,
+        response: {
+          200: GetUserResponseSchema,
+        },
       },
     },
-    async (
-      request: FastifyRequest<{ Params: { id: number }; Body: Partial<any> }>,
-      reply: FastifyReply
-    ) => {
+    async (request: FastifyRequest<{ Params: GetId; Body: UpdateUser }>, reply: FastifyReply) => {
       const user = await userService.update(request.params.id, request.body);
       if (!user) {
         return reply.status(404).send({ error: "User not found" });
@@ -90,23 +97,15 @@ export function userController(app: FastifyInstance) {
   );
 
   app.delete(
-    "/users/:id",
+    "/:id",
     {
       schema: {
         description: "Delete a user",
         tags: ["Users"],
-        params: {
-          type: "object",
-          properties: {
-            id: { type: "number" },
-          },
-        },
+        params: GetIdSchema,
       },
     },
-    async (
-      request: FastifyRequest<{ Params: { id: number } }>,
-      reply: FastifyReply
-    ) => {
+    async (request: FastifyRequest<{ Params: GetId }>, reply: FastifyReply) => {
       await userService.delete(request.params.id);
       return reply.status(204).send();
     }

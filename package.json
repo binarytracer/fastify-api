@@ -5,29 +5,44 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "nodemon"
+    "start": "nodemon",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "format": "prettier --write \"src/**/*.{ts,json}\"",
+    "format:fix": "prettier --write \"src/**/*.{ts,json}\" --fix",
+    "format:check": "prettier --check \"src/**/*.{ts,json}\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "devDependencies": {
-    "@sinclair/typebox": "^0.34.33",
-    "@types/node": "^22.15.18",
+    "@eslint/js": "^9.17.0",
+    "@sinclair/typebox": "0.34.41",
+    "@types/node": "24.9.1",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "10.1.8",
     "nodemon": "^3.1.10",
+    "prettier": "^3.6.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.8.3"
+    "typescript": "5.9.3",
+    "typescript-eslint": "^8.0.0"
   },
   "dependencies": {
-    "@fastify/env": "^5.0.2",
-    "@fastify/swagger": "^9.5.1",
-    "@fastify/swagger-ui": "^5.2.2",
-    "dotenv": "^16.5.0",
-    "fastify": "^5.3.3",
-    "pg": "^8.16.0",
+    "@fastify/env": "5.0.3",
+    "@fastify/swagger": "9.5.2",
+    "@fastify/swagger-ui": "5.2.3",
+    "@types/bcryptjs": "^3.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
+    "bcryptjs": "^3.0.2",
+    "dotenv": "17.2.3",
+    "fastify": "5.6.1",
+    "fastify-no-additional-properties": "^3.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "8.16.3",
     "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.24"
+    "typeorm": "0.3.27"
   },
   "nodemonConfig": {
     "ext": "ts",
@@ -36,5 +51,9 @@
       "node_modules/**"
     ],
     "exec": "ts-node -r tsconfig-paths/register src/index.ts"
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
+  "engines": {
+    "node": ">=24.10.0"
   }
 }

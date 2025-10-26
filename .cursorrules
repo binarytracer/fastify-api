@@ -1,0 +1,80 @@
+# Fastify API Development Rules
+
+## Response Schema Requirements
+
+### Every route MUST define response schemas
+- All route definitions using `app.get()`, `app.post()`, `app.put()`, `app.delete()`, etc. MUST include a `response` property in their schema
+- Response schemas should be defined for ALL possible status codes (200, 201, 400, 401, 404, 500, etc.)
+- Response schemas must use TypeBox or JSON Schema format
+
+### Example of correct route definition:
+
+```typescript
+app.post("/signup", {
+  schema: {
+    tags,
+    description: "Sign up",
+    body: PostSignUpSchema,
+    response: {
+      201: {
+        type: "object",
+        properties: {
+          message: { type: "string" },
+          user: {
+            type: "object",
+            properties: {
+              id: { type: "number" },
+              name: { type: "string" },
+              email: { type: "string" }
+            }
+          }
+        }
+      },
+      400: {
+        type: "object",
+        properties: {
+          error: { type: "string" }
+        }
+      }
+    }
+  }
+}, async (request, reply) => { ... });
+```
+
+### Anti-pattern to avoid:
+```typescript
+// ❌ BAD - Missing response schema
+app.post("/endpoint", {
+  schema: {
+    tags,
+    body: RequestSchema,
+    // Missing response schemas!
+  }
+}, handler);
+```
+
+### Best practices:
+1. Define response schemas in separate files (e.g., `schemas/response.schema.ts`)
+2. Use descriptive names like `SignUpResponseSchema`, `LoginResponseSchema`
+3. Include proper error response schemas for common cases (400, 401, 404, 500)
+4. When defining schemas with TypeBox, use the exported schemas directly in the response object
+
+## Code Organization
+
+### File Structure
+- Keep controllers focused on handling HTTP requests/responses
+- Keep services focused on business logic
+- Define schemas in separate `schemas/` directories within each module
+- Use TypeBox for schema definitions
+
+### Naming Conventions
+- Controllers: `*.controller.ts`
+- Services: `*.service.ts`
+- Schemas: `*.schema.ts`
+- Entities: `*.entity.ts`
+
+## Error Handling
+- Always use try-catch blocks in route handlers
+- Return appropriate HTTP status codes
+- Include meaningful error messages in error responses
+- Define error response schemas for all endpoints
