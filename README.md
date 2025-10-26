@@ -1,14 +1,14 @@
 ## Fastify API
 
-> practice project for fastify
+> practice project for fastify, using yarn
 
 ### Inclusions
 
 - [x] **Dotenv**, environment variables.
 - [x] **Swagger**, api docs
-- [x] **Typebox**, validation, swagger schemas
-- [x] **Typeorm**, ORM
-- [x] **PG**, postgredb library
+- [ ] **Typebox**, validation
+- [ ] **Typeorm**, ORM
+- [ ] **PG**, postgredb library
 - [ ] **Fastify Typeorm**, using typeorm inside fastify instance
 
 ### Local setup
@@ -19,5 +19,5 @@
 4. run the application,
 
 ```sh
-$ npm start
+$ yarn start
 ```
